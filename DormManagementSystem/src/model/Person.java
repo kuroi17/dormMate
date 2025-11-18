@@ -49,16 +49,12 @@ package model;
     public void setAddress(String address) {
         this.address = address;
     }
-
+ // ABSTRACTION: Abstract method for polymorphism
+    public abstract String displayInfo(); 
+    // abstract method walang body or implementation dito sa parentg class
  }
 
  
- // ABSTRACTION: Abstract method for polymorphism
-    public abstract String displayInfo();
+
     
-    // OPTIONAL: toString() for debugging (you can add this later!)
-    // @Override
-    // public String toString() {
-    //     return "Person{fullName='" + fullName + "', email='" + email + "'}";
-    // }
-}
+    
