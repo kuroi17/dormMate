@@ -104,49 +104,20 @@ public class Room {
         this.tenants = new ArrayList<>();
     }
 
+    public String getRoomNumber() { return roomNumber; }
+    public int getCapacity() { return capacity; }
+    public int getOccupiedCount() { return occupiedCount; }
+    public double getPricePerMonth() { return pricePerMonth; }
 
-
-    public String getRoomNumber() {
-         return roomNumber; 
-    }
-    public void setRoomNumber(String roomNumber){
-        this.roomNumber = roomNumber;
-    }
-    public void setCapacity(int capacity){
-        this.capacity = capacity;
-    }
-    public int getCapacity() { 
-        return capacity; 
-    }
-    public void setOccupiedCount(int occupiedCount){
-        this.occupiedCount = occupiedCount;
-
-    }
-    public int getOccupiedCount() {
-         return occupiedCount; 
-    }
-    public void setPricePerMonth(double pricePerMonth){
-        this.pricePerMonth = pricePerMonth;
-    }
-    public double getPricePerMonth() {
-         return pricePerMonth; 
-    }
-  
     public boolean isAvailable() { 
         return occupiedCount < capacity; 
     }
-    public void setTenants(List<Student> tenants){
-        this.tenants = tenants;
-    }
     
-    public List<Student> getTenants() { 
-        return tenants; 
-    }
+    public List<Student> getTenants() { return tenants; }
 
-    // Methods
-    public boolean book(Student student) { 
+    public boolean book(Student student) {
         if (occupiedCount < capacity) {
-            tenants.add(student); // add method to add student to tenants list
+            tenants.add(student);
             occupiedCount++;
 
             if (occupiedCount == capacity) {
