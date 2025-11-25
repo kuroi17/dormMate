@@ -4,32 +4,32 @@ package model;
  * Abstract class representing a person in the dorm management system.
  * @author Kuroi
  * 
- * // person may contain common attributes like name, address, contact number, email, etc.
+ * // person may contain common attributes like fullName, address, contact number, email, etc.
  */
 
 
  public abstract class Person {
-    private String name;
+    private String fullName;
     private String email;
-    private String contactInfo;
+    private String contactNumber;
     private String address;
 
 
 
-    public Person(String name, String email, String contactInfo, String address) {
-    this.name = name;
+    public Person(String fullName, String email, String contactNumber, String address) {
+    this.fullName = fullName;
     this.email = email;
-    this.contactInfo = contactInfo;
+    this.contactNumber = contactNumber;
     this.address = address;
  }
 
 
  // gettters and setters special methods
-    public String getName() {
-        return name;
+    public String getfullName() {
+        return fullName;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setfullName(String fullName) {
+        this.fullName = fullName;
     }
     public String getEmail() {
         return email;
@@ -37,11 +37,11 @@ package model;
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getContactInfo() {
-        return contactInfo;
+    public String getContactNumber() {
+        return contactNumber;
     }
-    public void setContactInfo(String contactInfo) {
-        this.contactInfo = contactInfo;
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
     public String getAddress() {
         return address;
@@ -53,6 +53,7 @@ package model;
     public abstract String displayInfo(); 
     // abstract method walang body or implementation dito sa parentg class
  }
+
 
  
 
