@@ -14,6 +14,9 @@
 5. Prevents scams by centralizing all interactions
 
 ---
+Concept	displayInfo()
+Abstraction	✅ Abstract method in Person (walang body)
+Polymorphism	✅ Different implementations in Student & Landlord
 
 ## 🏛️ Four Pillars of OOP (Simplified for Java Console/GUI)
 
@@ -26,135 +29,207 @@
 
 ---
 
-## 📊 CLASS DIAGRAM
+## 📊 CLASS DIAGRAM (UPDATED)
 
 ```
 +--------------------------------------------+
 |           Person (ABSTRACT) 👤             |  ◄─── ABSTRACTION
 +--------------------------------------------+
-| - fullName: String                         |  ◄─── ENCAPSULATION
-| - contactNumber: String                    |
+| - fullName: String                         |
 | - email: String                            |
-| - address: String                         |
-+--------------------------------------------+
-| + displayInfo(): String (ABSTRACT)         |
-| + getFullName(): String                    |
-| + getContactNumber(): String               |
-| + getEmail(): String                       |
-|                                            |
-+--------------------------------------------+
-           ▲                    ▲
-           │                    │
-    extends │                   │ extends (INHERITANCE)
-           │                    │
-+----------------------+   +----------------------+
-|     Student 🎓       |   |    Landlord 🏠       |
-+----------------------+   +----------------------+
-| - studentID: String  |   | - landlordID: String |
-| - university: String |   | - ownedDorms: List   |
-| - budget: double 
-isRenting: boolean
-Room currentRoom
-leaseStartDate: String
-leaseEndDate: String
-monthlyRent: String
-paymentStatus: String
-                         |   +----------------------+
-+----------------------+   | + postDormListing()  |
-| + browseRooms()                |   | + updateListing()    |
-| + inquireRoom()      |   | + deleteListing()    |
-| + bookRoom()         |   | + viewInquiries()    |
-| + displayInfo()      |   | + displayInfo()  
-                            +addDorm(Dorm dorm)    |  ◄─── POLYMORPHISM
-+----------------------+   +----------------------+
-
-+--------------------------------------------+
-|              DormListing 📋                |
-+--------------------------------------------+
-| - listingID: String                        |
-| - landlord: Landlord                       |
-| - dorm: Dorm                               |
-| - datePosted: String                       |
-| - status: String (Active/Inactive)         |
-| - description: String                      |
-+--------------------------------------------+
-| + getListingID(): String                   |
-| + getLandlord(): Landlord                  |
-| + getDorm(): Dorm                          |
-| + activate(): void                         |
-| + deactivate(): void                       |
-| + updateDescription(desc: String): void    |
-+--------------------------------------------+
-
-+--------------------------------------------+
-|                Dorm 🏢                     |
-+--------------------------------------------+
-| - dormID: String                           |
-| - dormName: String                         |
+| - contactNumber: String                    |
 | - address: String                          |
-| - contactInfo: String                      |
-| - amenities: List<String>                  |
-| - rooms: List<Room>                        |
 +--------------------------------------------+
-| + addRoom(room: Room): void                |
-| + getAvailableRooms(): List<Room>          |
-| + getTotalRooms(): int                     |
+| + Person(fullName, email, contactNumber,   |
+|          address)                          |
+| + getfullName(): String                    |
+| + setfullName(String): void                |
+| + getEmail(): String                       |
+| + setEmail(String): void                   |
+| + getContactNumber(): String               |
+| + setContactNumber(String): void           |
 | + getAddress(): String                     |
-| + getAmenities(): List<String>             |
+| + setAddress(String): void                 |
+| + displayInfo(): String (ABSTRACT)         |  ◄─── POLYMORPHISM
 +--------------------------------------------+
+              ▲                   ▲
+              |                   |
+      ┌───────┴────────┐  ┌──────┴────────┐
+      |                |  |               |
++------------------+   +-------------------+
+|    Student 🎓    |   |   Landlord 🏠     |
++------------------+   +-------------------+
+| INHERITANCE ◄────────┴─── INHERITANCE    |
++------------------+   +-------------------+
+| - studentID: String                      |
+| - universitySchool: String               |
+| - budget: double                         |
+| - isRenting: boolean                     |
+| - currentRoom: Room                      |
+| - leaseStartDate: String                 |
+| - leaseEndDate: String                   |
+| - monthlyRent: double                    |
+| - paymentStatus: String                  |
++------------------------------------------+
+| + Student(fullName, email, contactNumber,|
+|           address, studentID,            |
+|           university, budget)            |
+| + getStudentID(): String                 |
+| + setStudentID(String): void             |
+| + getUniversitySchool(): String          |
+| + setUniversitySchool(String): void      |
+| + getBudget(): double                    |
+| + setBudget(double): void                |
+| + isRenting(): boolean                   |
+| + getCurrentRoom(): Room                 |
+| + getLeaseStartDate(): String            |
+| + getLeaseEndDate(): String              |
+| + getMonthlyRent(): double               |
+| + getPaymentStatus(): String             |
+| + setPaymentStatus(String): void         |
+| + bookRoom(Room, String, String,         |
+|            double): void                 |
+| + vacateRoom(): void                     |
+| + payRent(): void                        |
+| + browseListings(): void                 |
+| + inquireRoom(DormListing): void         |
+| + displayInfo(): String                  |  ◄─── POLYMORPHISM
++------------------------------------------+
 
-+--------------------------------------------+
-|                Room 🚪                     |
-+--------------------------------------------+
-| - roomNumber: String                       |
-| - capacity: int                            |
-| - occupiedCount: int                       |
-| - pricePerMonth: double                    |
-| - isAvailable: boolean                     |
-| - tenants: List<Student>                   |
-+--------------------------------------------+
-| + isAvailable(): boolean                   |
-| + book(student: Student): boolean          |
-| + vacate(): void                           |
-| + getPricePerMonth(): double               |
-| + getCapacity(): int                       |
-| + getOccupancyStatus(): String             |
-+--------------------------------------------+
++------------------------------------------+
+|            Landlord 🏠                    |
++------------------------------------------+
+| - landlordID: String                     |
+| - ownedDorms: List<Dorm>                 |
++------------------------------------------+
+| + Landlord(fullName, email, contactNumber,|
+|            address, landlordID)          |
+| + getLandlordID(): String                |
+| + setLandlordID(String): void            |
+| + getOwnedDorms(): List<Dorm>            |
+| + setOwnedDorms(List<Dorm>): void        |
+| + addDorm(Dorm): void                    |
+| + postDormListing(DormListing): void     |
+| + updateListing(DormListing, String): void|
+| + deleteListing(String): void            |
+| + viewInquiries(List<Inquiry>): void     |
+| + displayInfo(): String                  |  ◄─── POLYMORPHISM
++------------------------------------------+
 
-+--------------------------------------------+
-|            Inquiry 💬                      |
-+--------------------------------------------+
-| - inquiryID: String                        |
-| - student: Student                         |
-| - listing: DormListing                     |
-| - message: String                          |
-| - dateInquired: String                     |
-| - status: String (Pending/Responded)       |
-+--------------------------------------------+
-| + getStudent(): Student                    |
-| + getListing(): DormListing                |
-| + getMessage(): String                     |
-| + respond(response: String): void          |
-+--------------------------------------------+
++------------------------------------------+
+|              Dorm 🏢                      |
++------------------------------------------+
+| - dormName: String                       |
+| - rooms: List<Room>                      |
+| - googleMapLink: String                  |
+| - address: String                        |
+| - shortDescription: String               |
++------------------------------------------+
+| + Dorm(dormName, googleMapLink,          |
+|        address, shortDescription)        |
+| + getDormName(): String                  |
+| + setDormName(String): void              |
+| + getRooms(): List<Room>                 |
+| + setRooms(List<Room>): void             |
+| + getGoogleMapLink(): String             |     
+| + setGoogleMapLink(String): void         |
+| + getAddress(): String                   |
+| + setAddress(String): void               |
+| + getShortDescription(): String          |
+| + setShortDescription(String): void      |
+| + addRoom(Room): void                    |
+| + getAvailableRooms(): List<Room>        |
+| + getTotalRooms(): int                   |
+| + displayInfo(): String                  |
++------------------------------------------+
+               |
+               | contains
+               ▼
++------------------------------------------+
+|              Room 🚪                      |
++------------------------------------------+
+| - roomNumber: String                     |
+| - capacity: int                          |
+| - occupiedCount: int                     |
+| - pricePerMonth: double                  |
+| - isAvailable: boolean                   |
+| - tenants: List<Student>                 |
++------------------------------------------+
+| + Room(roomNumber, capacity,             |
+|        pricePerMonth)                    |
+| + getRoomNumber(): String                |
+| + getCapacity(): int                     |
+| + getOccupiedCount(): int                |
+| + getPricePerMonth(): double             |
+| + getTenants(): List<Student>            |
+| + isAvailable(): boolean                 |
+| + book(Student): boolean                 |
+| + vacate(): void                         |
+| + getOccupancyStatus(): String           |
+| + displayInfo(): String                  |
++------------------------------------------+
 
-+--------------------------------------------+
-|          DormMATE (Main System) 🎛️        |  ◄─── ABSTRACTION (Hides complexity)
-+--------------------------------------------+
-| - listings: List<DormListing>              |
-| - students: List<Student>                  |
-| - landlords: List<Landlord>                |
-| - inquiries: List<Inquiry>                 |
-+--------------------------------------------+
-| + registerStudent(student: Student): void  |
-| + registerLandlord(landlord: Landlord): void |
-| + createListing(listing: DormListing): void |
-| + searchByLocation(address: String): List  |
-| + searchByBudget(maxPrice: double): List   |
-| + browseAllListings(): List<DormListing>   |
-| + submitInquiry(inquiry: Inquiry): void    |
-| + bookRoom(student: Student, room: Room): boolean |
-| + generateReport(): String                 |
-+--------------------------------------------+
++------------------------------------------+
+|          DormListing 📋                   |
++------------------------------------------+
+| - listingID: String                      |
+| - dorm: Dorm                             |
+| - landlord: Landlord                     |
+| - datePosted: String                     |
+| - status: String                         |
+| - availableRooms: int                    |
+| - photos: List<String>                   |
+| - priceRange: double                     |
++------------------------------------------+
+| + DormListing(listingID, dorm, landlord, |
+|               datePosted, availableRooms,|
+|               priceRange)                |
+| + getListingID(): String                 |
+| + setListingID(String): void             |
+| + getDorm(): Dorm                        |
+| + setDorm(Dorm): void                    |
+| + getLandlord(): Landlord                |
+| + setLandlord(Landlord): void            |
+| + getDatePosted(): String                |
+| + setDatePosted(String): void            |
+| + getStatus(): String                    |
+| + setStatus(String): void                |
+| + getAvailableRooms(): int               |
+| + setAvailableRooms(int): void           |
+| + getPhotos(): List<String>              |
+| + setPhotos(List<String>): void          |
+| + getPriceRange(): double                |
+| + setPriceRange(double): void            |
+| + addPhoto(String): void              |
+| + displayInfo(String): void              |
++------------------------------------------+
+
++------------------------------------------+
+|           Inquiry 💬                      |
++------------------------------------------+
+| - inquiryID: String                      |
+| - student: Student                       |
+| - listing: DormListing                   |
+| - message: String                        |
+| - dateInquired: String                   |
+| - status: String                         |
++------------------------------------------+
+| + Inquiry(inquiryID, student, listing,   |
+|           message, dateInquired)         |
+| + getInquiryID(): String                 |
+| + setInquiryID(String): void             |
+| + getStudent(): Student                  |
+| + setStudent(Student): void              |
+| + getListing(): DormListing              |
+| + setListing(DormListing): void          |
+| + getMessage(): String                   |
+| + setMessage(String): void               |
+| + getDateInquired(): String              |
+| + setDateInquired(String): void          |
+| + getStatus(): String                    |
+| + setStatus(String): void                |
+| + respond(String): void                  |
++------------------------------------------+
 ```
 
 ---
@@ -198,27 +273,35 @@ DormManagementSystem/
 | Field | Type | Description |
 |-------|------|-------------|
 | fullName | String | User's full name |
-| contactNumber | String | Phone number |
 | email | String | Email address |
-| userID | String | Unique identifier |
+| contactNumber | String | Phone number |
+| address | String | Home address |
 
 ---
 
 ### 2. **Student** - `model/Student.java`
-**Purpose:** Students looking for dorms
+**Purpose:** Students looking for dorms (can also be renting)
 
 **Extends:** Person ✅ (Inheritance)
 
 | Field | Type | Description |
 |-------|------|-------------|
 | studentID | String | Student ID number |
-| university | String | School name |
+| universitySchool | String | School name |
 | budget | double | Maximum rent budget |
+| isRenting | boolean | Currently renting status |
+| currentRoom | Room | Room being rented (null if not renting) |
+| leaseStartDate | String | Lease start date |
+| leaseEndDate | String | Lease end date |
+| monthlyRent | double | Monthly rental amount |
+| paymentStatus | String | Payment status (Pending/Paid/N/A) |
 
 **Methods:**
-- `browseRooms()` - View available listings
+- `browseListings()` - View available listings
 - `inquireRoom(DormListing)` - Ask about a listing
-- `bookRoom(Room)` - Reserve a room
+- `bookRoom(Room, String, String, double)` - Reserve a room with lease details
+- `vacateRoom()` - Leave current room
+- `payRent()` - Record rent payment
 - `displayInfo()` - Override (Polymorphism) ✅
 
 ---
@@ -248,11 +331,13 @@ DormManagementSystem/
 | Field | Type | Description |
 |-------|------|-------------|
 | listingID | String | Unique listing ID |
-| landlord | Landlord | Who posted it |
 | dorm | Dorm | The dorm being advertised |
+| landlord | Landlord | Who posted it |
 | datePosted | String | When it was posted |
 | status | String | "Active" or "Inactive" |
-| description | String | Details about the dorm |
+| availableRooms | int | Number of available rooms |
+| photos | List\<String\> | Photo URLs or paths |
+| priceRange | double | Price range for the listing |
 
 ---
 
@@ -261,12 +346,11 @@ DormManagementSystem/
 
 | Field | Type | Description |
 |-------|------|-------------|
-| dormID | String | Unique dorm ID |
 | dormName | String | Name of dorm |
-| address | String | Location |
-| contactInfo | String | Contact details |
-| amenities | List\<String\> | WiFi, AC, laundry, etc. |
 | rooms | List\<Room\> | Rooms in this dorm |
+| googleMapLink | String | Link to Google Maps location |
+| address | String | Physical location |
+| shortDescription | String | Brief description of the dorm |
 
 ---
 
@@ -359,40 +443,3 @@ DormManagementSystem/
 
 ---
 
-## 💡 Important Notes for Your Group
-
-### ✅ What You CAN Do (Realistic for Java OOP):
-- Console-based interface or Swing/JavaFX GUI
-- Store data in ArrayLists (or simple file I/O)
-- Search/filter by location, budget
-- Show dorm listings
-- Book rooms
-- Track availability
-
-### ❌ What You DON'T Need (Too Complex):
-- ~~Web-based (no need for HTML/CSS/JS)~~
-- ~~Google Maps API (just use String addresses)~~
-- ~~Real-time updates (static data is fine)~~
-- ~~Database (use ArrayLists or text files)~~
-- ~~Social media features (just simulate inquiries)~~
-
-### 🎯 Keep It Simple:
-Your professor wants to see **OOP pillars**, not a full-stack web app! Focus on:
-1. Good class design ✅
-2. Proper inheritance ✅
-3. Encapsulation everywhere ✅
-4. Method overriding ✅
-5. Clean separation of packages ✅
-
----
-
-## 🚀 Next Steps
-
-1. ✅ Review this diagram with your group
-2. ✅ Start coding `Person`, `Student`, `Landlord`
-3. ✅ Implement `Dorm`, `Room`, `DormListing`, `Inquiry`
-4. ✅ Build `DormMATE` service class
-5. ✅ Create simple GUI (Swing is enough!)
-6. ✅ Test and demonstrate OOP pillars
-
-Good luck! This design is realistic and shows all OOP concepts clearly. 🎓

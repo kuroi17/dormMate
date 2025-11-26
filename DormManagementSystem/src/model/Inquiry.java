@@ -84,7 +84,7 @@ public class Inquiry {
 
     public String displayInfo() {
         return "Inquiry ID: " + inquiryID +
-               "\nStudent: " + student.getName() +
+               "\nStudent: " + student.getfullName() +
                "\nMessage: " + message +
                "\nDate: " + dateInquired +
                "\nStatus: " + status;

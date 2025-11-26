@@ -26,9 +26,11 @@ public class Student extends Person {
     ) {
         // use super to call Person constructor
         super(fullName, email, contactNumber, address); 
+        
         this.studentID = studentID;
         this.universitySchool = universitySchool;
         this.budget = budget;
+
         // initialize rental state
         this.isRenting = false;
         this.currentRoom = null;
