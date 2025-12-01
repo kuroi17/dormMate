@@ -128,5 +128,45 @@ public class DormListing {
                "\nPhotos: " + photos.size() + " photo(s)";
     }
 
-   
+    // ============================================================
+    // LISTING-SPECIFIC OPERATIONS
+    // ============================================================
+    
+    public void updateAvailability() {
+        this.availableRooms = dorm.getAvailableRoomCount();
+    }
+    
+    public boolean matchesBudget(double studentBudget) {
+        return priceRange <= studentBudget;
+    }
+    
+    public boolean matchesLocation(String searchLocation) {
+        return dorm.getAddress().toLowerCase().contains(searchLocation.toLowerCase());
+    }
+    
+    public String getListingSummary() {
+        return String.format("🏢 %s | 📍 %s | 💰 ₱%.2f | 🚪 %d rooms",
+            dorm.getDormName(),
+            dorm.getAddress(),
+            priceRange,
+            availableRooms);
+    }
+    
+    // Getters and Setters
+    public String getListingID() { return listingID; }
+    public void setListingID(String listingID) { this.listingID = listingID; }
+    
+    public Dorm getDorm() { return dorm; }
+    public void setDorm(Dorm dorm) { this.dorm = dorm; }
+    
+    public Landlord getLandlord() { return landlord; }
+    public void setLandlord(Landlord landlord) { this.landlord = landlord; }
+    
+    public String getDatePosted() { return datePosted; }
+    public void setDatePosted(String datePosted) { this.datePosted = datePosted; }
+    
+    public int getAvailableRooms() { return availableRooms; }
+    
+    public double getPriceRange() { return priceRange; }
+    public void setPriceRange(double priceRange) { this.priceRange = priceRange; }
 }

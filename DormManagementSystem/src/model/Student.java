@@ -1,157 +1,139 @@
 package model;
 
 public class Student extends Person {
-    // own attributes of Student
-    private String studentID; 
+    private String studentID;
     private String universitySchool;
     private double budget;
-    
-    // rental state attributes
     private boolean isRenting;
     private Room currentRoom;
     private String leaseStartDate;
     private String leaseEndDate;
     private double monthlyRent;
     private String paymentStatus;
-
-    public Student(
-        String fullName,
-        String email,
-        String contactNumber,
-        String address,
-
-        String studentID,
-        String universitySchool,
-        double budget
-    ) {
-        // use super to call Person constructor
-        super(fullName, email, contactNumber, address); 
-        
+    
+    public Student(String fullName, String email, String contactNumber, 
+                   String address, String studentID, String universitySchool, 
+                   double budget) {
+        super(fullName, email, contactNumber, address);
         this.studentID = studentID;
         this.universitySchool = universitySchool;
         this.budget = budget;
-
-        // initialize rental state
         this.isRenting = false;
-        this.currentRoom = null;
         this.paymentStatus = "N/A";
     }
-
-    // use special methods known as getters and setters from enscapsulation
-    public String getStudentID() {
-        return studentID;
-    }
-
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
-    }
-
-    public String getUniversitySchool() {
-        return universitySchool;
-    }
-
-    public void setUniversitySchool(String universitySchool) {
-        this.universitySchool = universitySchool;
-    }
-
-    public double getBudget() {
-        return budget;
-    }
-
-    public void setBudget(double budget) {
-        this.budget = budget;
-    }
-
-    // rental state getters/setters
-    public boolean isRenting() {
-        return isRenting;
-    }
-
-    public Room getCurrentRoom() {
-        return currentRoom;
-    }
-
-    public String getLeaseStartDate() {
-        return leaseStartDate;
-    }
-
-    public String getLeaseEndDate() {
-        return leaseEndDate;
-    }
-
-    public double getMonthlyRent() {
-        return monthlyRent;
-    }
-
-    public String getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
-    // methods for booking/vacating
-    public void bookRoom(Room room, String startDate, String endDate, double rent) {
-        this.isRenting = true;
+    
+    // ============================================================
+    // STUDENT-SPECIFIC OPERATIONS (moved from dormMate.java)
+    // ============================================================
+    
+    public boolean bookRoom(Room room, String startDate, String endDate, double rent) {
+        if (isRenting) {
+            System.out.println("❌ You are already renting a room!");
+            return false;
+        }
+        
+        if (!room.isAvailable()) {
+            System.out.println("❌ Room is not available!");
+            return false;
+        }
+        
+        if (rent > budget) {
+            System.out.println("❌ Room rent exceeds your budget!");
+            return false;
+        }
+        
         this.currentRoom = room;
         this.leaseStartDate = startDate;
         this.leaseEndDate = endDate;
         this.monthlyRent = rent;
+        this.isRenting = true;
         this.paymentStatus = "Pending";
-        System.out.println(getfullName() + " successfully booked room " + room.getRoomNumber());
+        
+        room.setAvailable(false);
+        room.incrementCurrentOccupants();
+        
+        System.out.println("✅ Room booked successfully!");
+        return true;
     }
-
-    public void vacateRoom() {
-        if (currentRoom != null) {
-            System.out.println(getfullName() + " vacated room " + currentRoom.getRoomNumber());
+    
+    public void payRent() {
+        if (!isRenting) {
+            System.out.println("❌ You are not renting any room!");
+            return;
         }
-        this.isRenting = false;
+        
+        if ("Paid".equals(paymentStatus)) {
+            System.out.println("✅ Rent already paid for this month!");
+            return;
+        }
+        
+        this.paymentStatus = "Paid";
+        System.out.printf("✅ Rent of ₱%.2f paid successfully!\n", monthlyRent);
+    }
+    
+    public void vacateRoom() {
+        if (!isRenting) {
+            System.out.println("❌ You are not renting any room!");
+            return;
+        }
+        
+        if (currentRoom != null) {
+            currentRoom.setAvailable(true);
+            currentRoom.decrementCurrentOccupants();
+        }
+        
         this.currentRoom = null;
+        this.isRenting = false;
         this.leaseStartDate = null;
         this.leaseEndDate = null;
         this.monthlyRent = 0;
         this.paymentStatus = "N/A";
+        
+        System.out.println("✅ Room vacated successfully!");
     }
-
-    public void payRent() {
-        if (isRenting) {
-            this.paymentStatus = "Paid";
-            System.out.println("Payment of ₱" + String.format("%.2f", monthlyRent) + " recorded for " + getfullName());
-        } else {
-            System.out.println(getfullName() + " is not currently renting.");
-        }
-    }
-
-    public void browseListings() {
-        System.out.println(getfullName() + " is browsing available dorm listings...");
-    }
-
-    public void inquireRoom(DormListing listing) {
-        System.out.println(getfullName() + " inquired about: " + listing.getDorm().getDormName());
-    }
-    // abstract method implementation from Person class
-    // polymorphism: different implementation of displayInfo() method
+    
     @Override
     public String displayInfo() {
-        String info = "\n=== STUDENT INFO ===" +
-                      "\nName: " + getfullName() +
-                      "\nStudent ID: " + studentID +
-                      "\nUniversity: " + universitySchool +
-                      "\nBudget: ₱" + String.format("%.2f", budget) +
-                      "\nEmail: " + getEmail() +
-                      "\nContact: " + getContactNumber() +
-                      "\nAddress: " + getAddress();
+        StringBuilder info = new StringBuilder();
+        info.append("\n👤 STUDENT INFORMATION\n");
+        info.append("━".repeat(40)).append("\n");
+        info.append(String.format("Name: %s\n", getfullName()));
+        info.append(String.format("Student ID: %s\n", studentID));
+        info.append(String.format("University: %s\n", universitySchool));
+        info.append(String.format("Email: %s\n", getEmail()));
+        info.append(String.format("Contact: %s\n", getContactNumber()));
+        info.append(String.format("Budget: ₱%.2f\n", budget));
+        info.append(String.format("Renting: %s\n", isRenting ? "Yes" : "No"));
         
-        // Show rental info if currently renting
         if (isRenting && currentRoom != null) {
-            info += "\n\n=== RENTAL INFO ===" +
-                    "\nRoom: " + currentRoom.getRoomNumber() +
-                    "\nMonthly Rent: ₱" + String.format("%.2f", monthlyRent) +
-                    "\nLease: " + leaseStartDate + " to " + leaseEndDate +
-                    "\nPayment Status: " + paymentStatus;
+            info.append("\n🏠 RENTAL DETAILS\n");
+            info.append(String.format("Room: %s\n", currentRoom.getRoomNumber()));
+            info.append(String.format("Monthly Rent: ₱%.2f\n", monthlyRent));
+            info.append(String.format("Lease: %s to %s\n", leaseStartDate, leaseEndDate));
+            info.append(String.format("Payment Status: %s\n", paymentStatus));
         }
         
-        return info;
+        return info.toString();
     }
+    
+    // Getters and Setters
+    public String getStudentID() { return studentID; }
+    public void setStudentID(String studentID) { this.studentID = studentID; }
+    
+    public String getUniversitySchool() { return universitySchool; }
+    public void setUniversitySchool(String universitySchool) { this.universitySchool = universitySchool; }
+    
+    public double getBudget() { return budget; }
+    public void setBudget(double budget) { this.budget = budget; }
+    
+    public boolean isRenting() { return isRenting; }
+    
+    public Room getCurrentRoom() { return currentRoom; }
+    
+    public String getLeaseStartDate() { return leaseStartDate; }
+    public String getLeaseEndDate() { return leaseEndDate; }
+    
+    public double getMonthlyRent() { return monthlyRent; }
+    
+    public String getPaymentStatus() { return paymentStatus; }
 }
