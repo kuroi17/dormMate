@@ -1,191 +1,289 @@
 package service;
+
 import model.*;
+import util.*;
+import ui.Main;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class dormMate {
+
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         
-        System.out.println("=== TESTING DormMATE SYSTEM ===\n");
+        // Initialize data from Main class
+        Main.initializeData();
         
-        // ============ CREATE OBJECTS ============
-        
-        // Student object
-        Student student1 = new Student(
-            "Juan Dela Cruz",              
-            "juan.delacruz@email.com",      
-            "09123456789",               
-            "Manila, Philippines",          
-            "2021-12345",                  
-            "Batangas State University", 
-            5000.00          
-        );
+        System.out.println("=== WELCOME TO DORMMATE ===");
 
-        Student student2 = new Student(
-            "Maria Santos",
-            "maria.santos@email.com",
-            "09198765432",
-            "Quezon City, Philippines",
-            "2021-67890",
-            "University of the Philippines",
-            7000.00
-        );
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("\nAre you a:\n1. Student\n2. Landlord\n3. Exit");
+            System.out.print("Enter choice: ");
+            
+            try {
+                int choice = sc.nextInt();
+                sc.nextLine(); // consume newline
 
-        // Landlord object
-        Landlord landlord1 = new Landlord(
-            "Pedro Santos",
-            "pedro.santos@email.com",
-            "09876543210",
-            "Cebu, Philippines",
-            "LL-001"
-        );
-
-        Landlord landlord2 = new Landlord(
-            "Ana Reyes",
-            "ana.reyes@email.com",
-            "09171234567",
-            "Batangas City, Philippines",
-            "LL-002"
-        );
-
-        //  create Rooms first
-        Room room1 = new Room("101", 2, 3000.0);
-        Room room2 = new Room("102", 4, 5000.0);
-        Room room3 = new Room("201", 2, 3500.0);
-
-        //  create rooms list for Dorm constructor
-        List<Room> roomList1 = new ArrayList<>();
-        roomList1.add(room1);
-        roomList1.add(room2);
-
-        List<Room> roomList2 = new ArrayList<>();
-        roomList2.add(room3);
-
-        //  Create Dorm with proper constructor (requires List<Room>)
-        Dorm dorm1 = new Dorm(
-            "Nueva Villa",
-            roomList1,  // ✅ Pass the rooms list
-            "https://maps.google.com/nuevavilla",
-            "123 Dorm St, Batangas City",
-            "A cozy dormitory near BatStateU."
-        );
-
-        Dorm dorm2 = new Dorm(
-            "Sunshine Dorms",
-            roomList2,  // ✅ Pass the rooms list
-            "https://maps.google.com/sunshine",
-            "456 Campus Ave, Batangas City",
-            "Modern dorm with free Wi-Fi."
-        );
-
-        // Add dorms to landlords
-        landlord1.addDorm(dorm1);
-        landlord2.addDorm(dorm2);
-
-        // Create DormListings
-        DormListing listing1 = new DormListing(
-            "DL-001",
-            dorm1,
-            landlord1,
-            "2025-11-26",
-            2,
-            3000.00
-        );
-
-        DormListing listing2 = new DormListing(
-            "DL-002",
-            dorm2,
-            landlord2,
-            "2025-11-26",
-            1,
-            3500.00
-        );
-
-        // ============ TEST POLYMORPHISM ============
-        System.out.println("\n--- POLYMORPHISM TEST ---");
-        
-        Person p1 = student1;  
-        Person p2 = landlord1; 
-        
-        System.out.println(p1.displayInfo()); // Calls students's version
-        System.out.println(p2.displayInfo()); // Calls landlord's version
-
-        // ============ TEST STUDENT METHODS ============
-        System.out.println("\n--- STUDENT ACTIONS ---");
-        
-        student1.browseListings();
-        student1.inquireRoom(listing1);
-        
-        // ✅ Proper bookRoom call
-        student1.bookRoom(room1, "2026-01-01", "2026-12-31", 3000.0);
-        System.out.println(student1.displayInfo()); //  rental info
-        
-        student1.payRent();
-        
-        // ============ TEST LANDLORD METHODS ============
-        System.out.println("\n--- LANDLORD ACTIONS ---");
-        
-        landlord1.postDormListing(listing1);
-        landlord1.updateListing(listing1, "Affordable room near campus with free Wi-Fi.");
-        
-        // ============ TEST INQUIRY SYSTEM ============
-        System.out.println("\n--- INQUIRY TEST ---");
-        
-        // ✅ Create actual Inquiry objects
-        Inquiry inquiry1 = new Inquiry(
-            "INQ-001",
-            student1,
-            listing1,
-            "Is the room still available?",
-            "2025-11-26"
-        );
-
-        Inquiry inquiry2 = new Inquiry(
-            "INQ-002",
-            student2,
-            listing1,
-            "Can I visit the dorm tomorrow?",
-            "2025-11-26"
-        );
-
-        List<Inquiry> inquiries = new ArrayList<>();
-        inquiries.add(inquiry1);
-        inquiries.add(inquiry2);
-
-        landlord1.viewInquiries(inquiries);
-
-        // ============ TEST ROOM METHODS ============
-        System.out.println("\n--- ROOM BOOKING TEST ---");
-        
-        System.out.println("Room 102 status before booking: " + room2.getOccupancyStatus());
-        room2.book(student2);
-        System.out.println("Room 102 status after booking: " + room2.getOccupancyStatus());
-
-        // ============ TEST VACATE ============
-        System.out.println("\n--- VACATE TEST ---");
-        student1.vacateRoom();
-        System.out.println(student1.displayInfo()); // Should show no rental info
-
-        // ============ TEST DORM INFO ============
-        System.out.println("\n--- DORM INFORMATION ---");
-        System.out.println("Dorm Name: " + dorm1.getDormName());
-        System.out.println("Address: " + dorm1.getAddress());
-        System.out.println("Total Rooms: " + dorm1.getRooms().size());
-        
-        // Count available rooms manually
-        int availableCount = 0;
-        for (Room r : dorm1.getRooms()) {
-            if (r.isAvailable()) {
-                availableCount++;
+                switch (choice) {
+                    case 1 -> handleStudentMenu(sc);
+                    case 2 -> handleLandlordMenu(sc);
+                    case 3 -> {
+                        exit = true;
+                        System.out.println("Exiting DormMATE. Goodbye!");
+                    }
+                    default -> System.out.println("Invalid choice!");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input! Please enter a number.");
+                sc.nextLine(); // clear buffer
             }
         }
-        System.out.println("Available rooms in " + dorm1.getDormName() + ": " + availableCount);
 
-        // ============ FINAL SUMMARY ============
-        System.out.println("\n=== SYSTEM TEST COMPLETE ===");
-        System.out.println("✅ Encapsulation: Private fields + getters/setters");
-        System.out.println("✅ Inheritance: Student & Landlord extend Person");
-        System.out.println("✅ Polymorphism: displayInfo() works differently");
-        System.out.println("✅ Abstraction: Person is abstract class");
+        sc.close();
+    }
+    
+    // ========== STUDENT MENU ==========
+    private static void handleStudentMenu(Scanner sc) {
+        System.out.println("\n--- STUDENT LOGIN ---");
+        System.out.print("Enter your student ID: ");
+        String sid = sc.nextLine();
+        
+        Student currentStudent = null;
+        for (Student s : Main.students) {
+            if (s.getStudentID().equals(sid)) {
+                currentStudent = s;
+                break;
+            }
+        }
+        
+        if (currentStudent == null) {
+            System.out.println("Student not found!");
+            return;
+        }
+        
+        System.out.println("Welcome, " + currentStudent.getfullName() + "!");
+
+        boolean studentExit = false;
+        while (!studentExit) {
+            System.out.println("\n--- STUDENT MENU ---");
+            System.out.println("1. Browse listings");
+            System.out.println("2. Inquire about a dorm");
+            System.out.println("3. Book a room");
+            System.out.println("4. Pay rent");
+            System.out.println("5. Display info");
+            System.out.println("6. Logout");
+            System.out.print("Choice: ");
+            
+            try {
+                int sChoice = sc.nextInt();
+                sc.nextLine();
+
+                switch (sChoice) {
+                    case 1 -> browseListing();
+                    case 2 -> inquireDorm(sc, currentStudent);
+                    case 3 -> bookRoom(sc, currentStudent);
+                    case 4 -> currentStudent.payRent();
+                    case 5 -> System.out.println(currentStudent.displayInfo());
+                    case 6 -> {
+                        studentExit = true;
+                        System.out.println("Logged out successfully!");
+                    }
+                    default -> System.out.println("Invalid choice!");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input! Please try again.");
+                sc.nextLine();
+            }
+        }
+    }
+    
+    // ========== LANDLORD MENU ==========
+    private static void handleLandlordMenu(Scanner sc) {
+        System.out.println("\n--- LANDLORD LOGIN ---");
+        System.out.print("Enter your landlord ID: ");
+        String lid = sc.nextLine();
+        
+        Landlord currentLandlord = null;
+        for (Landlord l : Main.landlords) {
+            if (l.getLandlordID().equals(lid)) {
+                currentLandlord = l;
+                break;
+            }
+        }
+        
+        if (currentLandlord == null) {
+            System.out.println("Landlord not found!");
+            return;
+        }
+        
+        System.out.println("Welcome, " + currentLandlord.getfullName() + "!");
+
+        boolean landlordExit = false;
+        while (!landlordExit) {
+            System.out.println("\n--- LANDLORD MENU ---");
+            System.out.println("1. View my dorms");
+            System.out.println("2. View inquiries");
+            System.out.println("3. Display info");
+            System.out.println("4. Logout");
+            System.out.print("Choice: ");
+            
+            try {
+                int lChoice = sc.nextInt();
+                sc.nextLine();
+
+                switch (lChoice) {
+                    case 1 -> viewLandlordDorms(currentLandlord);
+                    case 2 -> viewInquiries(currentLandlord);
+                    case 3 -> System.out.println(currentLandlord.displayInfo());
+                    case 4 -> {
+                        landlordExit = true;
+                        System.out.println("Logged out successfully!");
+                    }
+                    default -> System.out.println("Invalid choice!");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input! Please try again.");
+                sc.nextLine();
+            }
+        }
+    }
+    
+    // ========== STUDENT FUNCTIONS ==========
+    
+    private static void browseListing() {
+        System.out.println("\n--- AVAILABLE LISTINGS ---");
+        if (Main.listings.isEmpty()) {
+            System.out.println("No listings available.");
+            return;
+        }
+        
+        for (DormListing l : Main.listings) {
+            System.out.println("\nListing ID: " + l.getListingID());
+            System.out.println("Dorm: " + l.getDorm().getDormName());
+            System.out.println("Address: " + l.getDorm().getAddress());
+            System.out.println("Available Rooms: " + l.getAvailableRooms());
+            System.out.println("Monthly Rate: ₱" + l.getPriceRange());
+            System.out.println("Description: " + l.getDorm().getShortDescription());
+        }
+    }
+    
+    private static void inquireDorm(Scanner sc, Student student) {
+        System.out.print("Enter listing ID to inquire: ");
+        String lid = sc.nextLine();
+        
+        DormListing selected = null;
+        for (DormListing l : Main.listings) {
+            if (l.getListingID().equals(lid)) {
+                selected = l;
+                break;
+            }
+        }
+        
+        if (selected != null) {
+            System.out.print("Enter your message: ");
+            String msg = sc.nextLine();
+            
+            try {
+                Inquiry inquiry = new Inquiry(
+                    "INQ-" + System.currentTimeMillis(),
+                    student,
+                    selected,
+                    msg,
+                    "2025-12-01"
+                );
+                Main.inquiries.add(inquiry);
+                System.out.println("✓ Inquiry sent successfully!");
+            } catch (Exception e) {
+                System.out.println("✗ Failed to send inquiry: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Listing not found!");
+        }
+    }
+    
+    private static void bookRoom(Scanner sc, Student student) {
+        System.out.print("Enter room number to book: ");
+        String rn = sc.nextLine();
+        
+        Room selected = null;
+        for (DormListing l : Main.listings) {
+            for (Room r : l.getDorm().getRooms()) {
+                if (r.getRoomNumber().equals(rn)) {
+                    selected = r;
+                    break;
+                }
+            }
+            if (selected != null) break;
+        }
+        
+        if (selected == null) {
+            System.out.println("Room not found!");
+            return;
+        }
+        
+        if (!selected.isAvailable()) {
+            System.out.println("Room is not available!");
+            return;
+        }
+        
+        try {
+            System.out.print("Enter start date (YYYY-MM-DD): ");
+            String startDate = sc.nextLine();
+            InputValidator.validateDate(startDate);
+            
+            System.out.print("Enter end date (YYYY-MM-DD): ");
+            String endDate = sc.nextLine();
+            InputValidator.validateDate(endDate);
+            
+            student.bookRoom(selected, startDate, endDate, selected.getPricePerMonth());
+            System.out.println("✓ Room booked successfully!");
+            
+        } catch (Exception e) {
+            System.out.println("✗ Booking failed: " + e.getMessage());
+        }
+    }
+    
+    // ========== LANDLORD FUNCTIONS ==========
+    
+    private static void viewLandlordDorms(Landlord landlord) {
+        System.out.println("\n--- MY DORMS ---");
+        List<Dorm> dorms = landlord.getOwnedDorms();
+        
+        if (dorms.isEmpty()) {
+            System.out.println("You have no dorms listed.");
+            return;
+        }
+        
+        for (Dorm d : dorms) {
+            System.out.println("\nDorm: " + d.getDormName());
+            System.out.println("Address: " + d.getAddress());
+            System.out.println("Total Rooms: " + d.getRooms().size());
+            
+            int available = 0;
+            for (Room r : d.getRooms()) {
+                if (r.isAvailable()) available++;
+            }
+            System.out.println("Available Rooms: " + available);
+        }
+    }
+    
+    private static void viewInquiries(Landlord landlord) {
+        System.out.println("\n--- INQUIRIES ---");
+        
+        List<Inquiry> landlordInquiries = new ArrayList<>();
+        for (Inquiry inq : Main.inquiries) {
+            if (inq.getListing().getLandlord().getLandlordID().equals(landlord.getLandlordID())) {
+                landlordInquiries.add(inq);
+            }
+        }
+        
+        if (landlordInquiries.isEmpty()) {
+            System.out.println("No inquiries yet.");
+            return;
+        }
+        
+        landlord.viewInquiries(landlordInquiries);
     }
 }
