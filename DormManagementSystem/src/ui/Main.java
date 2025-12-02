@@ -2,13 +2,7 @@ package ui;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.Inquiry;
-import model.Dorm;
-import model.DormListing;
-import model.Landlord;
-import model.Room;
-import model.Student;
-
+import model.*;
 public class Main {
     
     // Make these PUBLIC and STATIC so dormMate can access them
