@@ -49,7 +49,7 @@ public class StudentMenu {
                     case 1 -> browseListing();
                     case 2 -> inquireDorm(input, currentStudent);
                     case 3 -> bookRoom(input, currentStudent);
-                    case 4 -> currentStudent.payRent();
+                    case 4 -> payRent(input, currentStudent);
                     case 5 -> System.out.println(currentStudent.displayInfo());
                     case 6 -> {
                         studentExit = true;
@@ -147,7 +147,7 @@ public class StudentMenu {
     }
 
     private void inquireDorm(Scanner sc, Student student) {
-        System.out.println("\n---AVAILABLE LISTINGS---");
+        System.out.println("\n---AVAILABLE DORM LISTINGS---");
         for (DormListing dormlisting: Main.listings){
             System.out.println("Available Listing ID: " +
              dormlisting.getListingID());
@@ -246,6 +246,33 @@ public class StudentMenu {
             
         } catch (Exception e) {
             System.out.println("✗ Booking failed: " + e.getMessage());
+        }
+    }
+
+    private void payRent(Scanner sc, Student student) {
+        try {
+            System.out.println("\n--- PAY RENT ---");
+            
+            if (!student.isRenting()) {
+                System.out.println("You are not currently renting a room.");
+                return;
+            }
+            
+            System.out.println("Current room: " + student.getCurrentRoom().getRoomNumber());
+            System.out.println("Monthly rent: ₱" + String.format("%.2f", student.getMonthlyRent()));
+            System.out.println("Current budget: ₱" + String.format("%.2f", student.getBudget()));
+            
+            System.out.print("\nDo you want to pay rent? (yes/no): ");
+            String choice = sc.nextLine().trim().toLowerCase();
+            
+            if (choice.equals("yes") || choice.equals("y") || choice.equals("Yes") || choice.equals("Y") || choice.equals("YES")) {
+                student.payRent();
+            } else {
+                System.out.println("Payment cancelled.");
+            }
+            
+        } catch (Exception e) {
+            System.out.println("✗ Payment failed: " + e.getMessage());
         }
     }
 
