@@ -1,4 +1,5 @@
 package model;
+import util.InputValidator;
 
 public class Student extends Person {
     // own attributes of Student
@@ -59,7 +60,13 @@ public class Student extends Person {
     }
 
     public void setBudget(double budget) {
-        this.budget = budget;
+        if (InputValidator.isValidPrice(budget)){
+            this.budget = budget;
+        }
+        else{
+            InputValidator.printError("Budget must be positive: " + budget);
+        }
+        
     }
 
     // rental state getters/setters
@@ -93,6 +100,28 @@ public class Student extends Person {
 
     // methods for booking/vacating
     public void bookRoom(Room room, String startDate, String endDate, double rent) {
+        
+        if(!room.isAvailable()){
+            InputValidator.printError("Room " + room.getRoomNumber() + " is not available.");
+            return;
+        }
+
+        if (!InputValidator.isValidDate(startDate)){
+            InputValidator.printError("Invalid start date: " + startDate);
+            return;
+        }
+
+         if (!InputValidator.isValidDate(endDate)){
+            InputValidator.printError("Invalid end date: " + endDate);
+            return;
+        }
+         // Validate budget
+        if (this.budget < rent) {
+            InputValidator.printError("Insufficient budget! Need ₱" + rent + " but have ₱" + this.budget);
+            return;
+        }
+        
+        
         this.isRenting = true;
         this.currentRoom = room;
         this.leaseStartDate = startDate;
@@ -115,13 +144,19 @@ public class Student extends Person {
     }
 
     public void payRent() {
-        if (isRenting) {
-            this.paymentStatus = "Paid";
-            System.out.println("Payment of ₱" + String.format("%.2f", monthlyRent) + " recorded for " + getfullName());
-        } else {
-            System.out.println(getfullName() + " is not currently renting.");
-        }
+        if (!isRenting) {
+            InputValidator.printError(getfullName() + " is not currently renting.");
+            return;
     }
+     if (this.budget < this.monthlyRent) {
+            InputValidator.printError("Insufficient budget! Need ₱" + monthlyRent + " but have ₱" + this.budget);
+            return;
+        }
+        this.budget -= this.monthlyRent;
+        this.paymentStatus = "Paid";
+         System.out.println("✓ Payment of ₱" + String.format("%.2f", monthlyRent) + " recorded for " + getfullName());
+        System.out.println("Remaining budget: ₱" + String.format("%.2f", this.budget));
+}
 
     public void browseListings() {
         System.out.println(getfullName() + " is browsing available dorm listings...");

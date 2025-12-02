@@ -75,6 +75,9 @@ public class Landlord extends Person {
                "\nLandlord ID: " + landlordID +
                "\nOwned Dorms: " + ownedDorms.size() +
                "\nEmail: " + getEmail() +
-               "\nContact: " + getContactNumber();
+               "\nContact: " + getContactNumber() +
+               "\nAddress: " + getAddress() +
+               "\n Total Dorms: " + ownedDorms.size();
+               
     }
 }

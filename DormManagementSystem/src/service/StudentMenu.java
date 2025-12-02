@@ -81,73 +81,88 @@ public class StudentMenu {
         }
     }
 
-private void inquireDorm(Scanner sc, Student student) {
-        System.out.print("Enter listing ID to inquire: ");
-        String lid = sc.nextLine();
-        
-        DormListing selected = null;
-        for (DormListing l : Main.listings) {
-            if (l.getListingID().equals(lid)) {
-                selected = l;
-                break;
-            }
-        }
-        
-        if (selected != null) {
-            System.out.print("Enter your message: ");
-            String msg = sc.nextLine();
+    private void inquireDorm(Scanner sc, Student student) {
+        try {
+            System.out.print("Enter listing ID to inquire: ");
+            String lid = sc.nextLine();
             
-            try {
-                Inquiry inquiry = new Inquiry(
-                    "INQ-" + System.currentTimeMillis(),
-                    student,
-                    selected,
-                    msg,
-                    "2025-12-01"
-                );
-                Main.inquiries.add(inquiry);
-                System.out.println("✓ Inquiry sent successfully!");
-            } catch (Exception e) {
-                System.out.println("✗ Failed to send inquiry: " + e.getMessage());
-            }
-        } else {
-            System.out.println("Listing not found!");
-        }
-    }
-
-    private void bookRoom(Scanner sc, Student student) {
-        System.out.print("Enter room number to book: ");
-        String rn = sc.nextLine();
-        
-        Room selected = null;
-        for (DormListing l : Main.listings) {
-            for (Room r : l.getDorm().getRooms()) {
-                if (r.getRoomNumber().equals(rn)) {
-                    selected = r;
+            DormListing selected = null;
+            for (DormListing l : Main.listings) {
+                if (l.getListingID().equals(lid)) {
+                    selected = l;
                     break;
                 }
             }
-            if (selected != null) break;
+            
+            if (selected == null) {
+                InputValidator.printError("Listing not found!");
+                return;
+            }
+            
+            System.out.print("Enter your message: ");
+            String msg = sc.nextLine();
+            
+            if (!InputValidator.isNotEmpty(msg)) {
+                InputValidator.printError("Message cannot be empty!");
+                return;
+            }
+            
+            Inquiry inquiry = new Inquiry(
+                "INQ-" + System.currentTimeMillis(),
+                student,
+                selected,
+                msg,
+                "2025-12-01"
+            );
+            Main.inquiries.add(inquiry);
+            System.out.println("✓ Inquiry sent successfully!");
+            
+        } catch (Exception e) {
+            System.out.println("✗ Failed to send inquiry: " + e.getMessage());
         }
-        
-        if (selected == null) {
-            System.out.println("Room not found!");
-            return;
-        }
-        
-        if (!selected.isAvailable()) {
-            System.out.println("Room is not available!");
-            return;
-        }
-        
+    }
+
+        private void bookRoom(Scanner sc, Student student) {
         try {
+            System.out.print("Enter room number to book: ");
+            String rn = sc.nextLine();
+            
+            Room selected = null;
+            for (DormListing l : Main.listings) {
+                for (Room r : l.getDorm().getRooms()) {
+                    if (r.getRoomNumber().equals(rn)) {
+                        selected = r;
+                        break;
+                    }
+                }
+                if (selected != null) break;
+            }
+            
+            if (selected == null) {
+                InputValidator.printError("Room not found!");
+                return;
+            }
+            
+            if (!selected.isAvailable()) {
+                InputValidator.printError("Room is not available!");
+                return;
+            }
+            
             System.out.print("Enter start date (YYYY-MM-DD): ");
             String startDate = sc.nextLine();
-            InputValidator.validateDate(startDate);
+            
+            if (!InputValidator.isValidDate(startDate)) {
+                InputValidator.printError("Invalid start date format!");
+                return;
+            }
             
             System.out.print("Enter end date (YYYY-MM-DD): ");
             String endDate = sc.nextLine();
-            InputValidator.validateDate(endDate);
+            
+            if (!InputValidator.isValidDate(endDate)) {
+                InputValidator.printError("Invalid end date format!");
+                return;
+            }
             
             student.bookRoom(selected, startDate, endDate, selected.getPricePerMonth());
             System.out.println("✓ Room booked successfully!");
