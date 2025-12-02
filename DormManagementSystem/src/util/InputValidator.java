@@ -47,6 +47,6 @@ public class InputValidator {
 
     // Print error message helper
     public static void printError(String message) {
-        System.out.println("✗ " + message);
+        System.out.println("X " + message);
     }
 }

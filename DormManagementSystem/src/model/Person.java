@@ -7,8 +7,6 @@ import util.InputValidator;
     private String contactNumber;
     private String address;
 
-
-
     public Person(String fullName, String email, String contactNumber, String address) {
     this.fullName = fullName;
     if (InputValidator.isValidEmail(email)) {
@@ -19,7 +17,7 @@ import util.InputValidator;
     if (InputValidator.isValidContact(contactNumber)) {
     this.contactNumber = contactNumber;
     } else {
-    this.contactNumber = "00000000000";
+    this.contactNumber = "This Contact Number format is incorrect.";
     }
     if (!InputValidator.isValidEmail(email)) {
             InputValidator.printError("Invalid email provided: " + email);

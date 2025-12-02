@@ -124,7 +124,7 @@ public class StudentMenu {
         studentidInput, schoolInput, budgetInput);
     Main.students.add(newStudent);
 
-    System.out.println("✓ Account created successfully!");
+    System.out.println("Account created successfully!");
 }
 
 
@@ -141,7 +141,7 @@ public class StudentMenu {
             System.out.println("Dorm: " + l.getDorm().getDormName());
             System.out.println("Address: " + l.getDorm().getAddress());
             System.out.println("Available Rooms: " + l.getAvailableRooms());
-            System.out.println("Monthly Rate: ₱" + l.getPriceRange());
+            System.out.println("Monthly Rate: (Php)" + l.getPriceRange());
             System.out.println("Description: " + l.getDorm().getShortDescription());
         }
     }
@@ -185,10 +185,10 @@ public class StudentMenu {
                 "2025-12-01"
             );
             Main.inquiries.add(inquiry);
-            System.out.println("✓ Inquiry sent successfully!");
+            System.out.println("Inquiry sent successfully!");
             
         } catch (Exception e) {
-            System.out.println("✗ Failed to send inquiry: " + e.getMessage());
+            System.out.println("Failed to send inquiry: " + e.getMessage());
         }
     }
 
@@ -242,12 +242,10 @@ public class StudentMenu {
             }
             
             student.bookRoom(selected, startDate, endDate, selected.getPricePerMonth());
-            System.out.println("✓ Room booked successfully!");
+            System.out.println("Room booked successfully!");
             
         } catch (Exception e) {
-            System.out.println("✗ Booking failed: " + e.getMessage());
+            System.out.println("Booking failed: " + e.getMessage());
         }
     }
-
-    
 }

@@ -117,7 +117,7 @@ public class Student extends Person {
         }
          // Validate budget
         if (this.budget < rent) {
-            InputValidator.printError("Insufficient budget! Need ₱" + rent + " but have ₱" + this.budget);
+            InputValidator.printError("Insufficient budget! Need (Php)" + rent + " but have (Php)" + this.budget);
             return;
         }
         
@@ -149,13 +149,13 @@ public class Student extends Person {
             return;
     }
      if (this.budget < this.monthlyRent) {
-            InputValidator.printError("Insufficient budget! Need ₱" + monthlyRent + " but have ₱" + this.budget);
+            InputValidator.printError("Insufficient budget! Need (Php)" + monthlyRent + " but have (Php)" + this.budget);
             return;
         }
         this.budget -= this.monthlyRent;
         this.paymentStatus = "Paid";
-         System.out.println("✓ Payment of ₱" + String.format("%.2f", monthlyRent) + " recorded for " + getfullName());
-        System.out.println("Remaining budget: ₱" + String.format("%.2f", this.budget));
+         System.out.println("Payment of (Php)" + String.format("%.2f", monthlyRent) + " recorded for " + getfullName());
+        System.out.println("Remaining budget: (Php)" + String.format("%.2f", this.budget));
 }
 
     public void browseListings() {
@@ -173,7 +173,7 @@ public class Student extends Person {
                       "\nName: " + getfullName() +
                       "\nStudent ID: " + studentID +
                       "\nUniversity: " + universitySchool +
-                      "\nBudget: ₱" + String.format("%.2f", budget) +
+                      "\nBudget: (Php)" + String.format("%.2f", budget) +
                       "\nEmail: " + getEmail() +
                       "\nContact: " + getContactNumber() +
                       "\nAddress: " + getAddress();
@@ -182,7 +182,7 @@ public class Student extends Person {
         if (isRenting && currentRoom != null) {
             info += "\n\n=== RENTAL INFO ===" +
                     "\nRoom: " + currentRoom.getRoomNumber() +
-                    "\nMonthly Rent: ₱" + String.format("%.2f", monthlyRent) +
+                    "\nMonthly Rent: (Php)" + String.format("%.2f", monthlyRent) +
                     "\nLease: " + leaseStartDate + " to " + leaseEndDate +
                     "\nPayment Status: " + paymentStatus;
         }

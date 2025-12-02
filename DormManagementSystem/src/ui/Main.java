@@ -102,6 +102,6 @@ public class Main {
         listings.add(listing1);
         listings.add(listing2);
         
-        System.out.println("✓ Data initialized successfully!\n");
+        System.out.println("Data initialized successfully!\n");
     }
 }

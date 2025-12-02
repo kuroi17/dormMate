@@ -83,6 +83,4 @@ import java.util.List;
                "Short Description: " + shortDescription + "\n" +
                "Number of Rooms: " + rooms.size() + "\n" ;
     } 
-
-
- }
+}

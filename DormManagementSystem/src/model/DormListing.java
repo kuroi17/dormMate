@@ -121,7 +121,7 @@ public class DormListing {
                "\nDorm Name: " + dorm.getDormName() +
                "\nAddress: " + dorm.getAddress() +
                "\nGoogle Maps: " + dorm.getGoogleMapLink() +
-               "\nPrice Range: ₱" + String.format("%.2f", priceRange) +
+               "\nPrice Range: (Php)" + String.format("%.2f", priceRange) +
                "\nAvailable Rooms: " + availableRooms +
                "\nStatus: " + status +
                "\nDate Posted: " + datePosted +

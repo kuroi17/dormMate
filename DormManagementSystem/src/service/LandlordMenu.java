@@ -111,7 +111,7 @@ public class LandlordMenu {
     Landlord newLandlord = new Landlord(name, email, phone, address, lid);
     Main.landlords.add(newLandlord);
 
-    System.out.println("✓ Landlord account created successfully!");
+    System.out.println("Landlord account created successfully!");
 }
 
     private void viewLandlordDorms(Landlord landlord) {
@@ -150,7 +150,6 @@ public class LandlordMenu {
             System.out.println("No inquiries yet.");
             return;
         }
-        
         landlord.viewInquiries(landlordInquiries);
     }
 }
