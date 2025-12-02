@@ -2,13 +2,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/*
- * 
- * 
- * @author Kuroi 
- */
-
  public class Dorm {
     // instance variable
     private String dormName;
@@ -16,7 +9,6 @@ import java.util.List;
     private String googleMapLink;
     private String address;
     public String shortDescription;
-
 
     // constructor
     public Dorm (
@@ -31,7 +23,6 @@ import java.util.List;
         this.googleMapLink = googleMapLink;
         this.address = address;
         this.shortDescription = shortDescription;
-
     }
 
     public String getDormName (){
@@ -72,7 +63,7 @@ import java.util.List;
         }
     }
 
-    @Override  // implementation of abstract method from Person class 
+    @Override  // implementation of abstract method from the Person class 
     // POLYMORPHISM: Different implementation of displayInfo() method
     public String toString(){
         return "Dorm Name: " + dormName + "\n" +

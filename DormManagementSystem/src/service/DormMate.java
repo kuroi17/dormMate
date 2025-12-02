@@ -42,7 +42,6 @@ public class DormMate {
                 input.nextLine(); // clear buffer
             }
         }
-
         input.close();
     }   
    

@@ -1,17 +1,12 @@
 package model;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Represents a posted dorm listing on the platform.
- * @author Kuroi
- */
 public class DormListing {
     
     private String listingID;
-    private Dorm dorm;  // Contains dormName, address, googleMapLink, etc.
-    private Landlord landlord; // TODO: Wait for Landlord.java by Shin
+    private Dorm dorm;  
+    private Landlord landlord; 
     private String datePosted;
     private String status;
     private int availableRooms;
@@ -45,7 +40,6 @@ public class DormListing {
         dorm.shortDescription = newDesc;
     }
 
-    
     public String getListingID() {
         return listingID;
     }
@@ -124,9 +118,6 @@ public class DormListing {
                "\nPrice Range: (Php)" + String.format("%.2f", priceRange) +
                "\nAvailable Rooms: " + availableRooms +
                "\nStatus: " + status +
-               "\nDate Posted: " + datePosted +
-               "\nPhotos: " + photos.size() + " photo(s)";
+               "\nDate Posted: " + datePosted;
     }
-
-   
 }

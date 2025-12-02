@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class StudentMenu {
     public void start(Scanner input){
 
-
         System.out.println("\n--- STUDENT LOGIN ---");
         System.out.print("Enter your student ID: ");
         String sid = input.nextLine();
@@ -36,9 +35,8 @@ public class StudentMenu {
             System.out.println("1. Browse listings");
             System.out.println("2. Inquire about a dorm");
             System.out.println("3. Book a room");
-            System.out.println("4. Pay rent");
-            System.out.println("5. Display info");
-            System.out.println("6. Logout");
+            System.out.println("4. Display info");
+            System.out.println("5. Logout");
             System.out.print("Choice: ");
             
             try {
@@ -49,9 +47,8 @@ public class StudentMenu {
                     case 1 -> browseListing();
                     case 2 -> inquireDorm(input, currentStudent);
                     case 3 -> bookRoom(input, currentStudent);
-                    case 4 -> payRent(input, currentStudent);
-                    case 5 -> System.out.println(currentStudent.displayInfo());
-                    case 6 -> {
+                    case 4 -> System.out.println(currentStudent.displayInfo());
+                    case 5 -> {
                         studentExit = true;
                         System.out.println("Logged out successfully!");
                     }
@@ -248,31 +245,4 @@ public class StudentMenu {
             System.out.println("Booking failed: " + e.getMessage());
         }
     }
-
-    private void payRent(Scanner sc, Student student) {
-        try {
-            System.out.println("\n--- PAY RENT ---");
-            
-            if (!student.isRenting()) {
-                System.out.println("You are not currently renting a room.");
-                return;
-            }
-            
-            System.out.println("Current room: " + student.getCurrentRoom().getRoomNumber());
-            System.out.println("Monthly rent: (Php)" + String.format("%.2f", student.getMonthlyRent()));
-            System.out.println("Current budget: (Php)" + String.format("%.2f", student.getBudget()));
-            
-            System.out.print("\nDo you want to pay rent? (yes/no): ");
-            String choice = sc.nextLine().trim().toLowerCase();
-            
-            if (choice.equals("yes") || choice.equals("y") || choice.equals("Yes") || choice.equals("Y") || choice.equals("YES")) {
-                student.payRent();
-            } else {
-                System.out.println("Payment cancelled.");
-            }
-            
-        } catch (Exception e) {
-            System.out.println("Payment failed: " + e.getMessage());
-        }
-    }    
 }

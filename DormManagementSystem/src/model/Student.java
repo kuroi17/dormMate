@@ -128,7 +128,7 @@ public class Student extends Person {
         this.leaseEndDate = endDate;
         this.monthlyRent = rent;
         this.paymentStatus = "Pending";
-        System.out.println(getfullName() + " successfully booked room " + room.getRoomNumber());
+        System.out.println(getfullName() + " successfully booked the room " + room.getRoomNumber());
     }
 
     public void vacateRoom() {
@@ -142,21 +142,6 @@ public class Student extends Person {
         this.monthlyRent = 0;
         this.paymentStatus = "N/A";
     }
-
-    public void payRent() {
-        if (!isRenting) {
-            InputValidator.printError(getfullName() + " is not currently renting.");
-            return;
-    }
-     if (this.budget < this.monthlyRent) {
-            InputValidator.printError("Insufficient budget! Need (Php)" + monthlyRent + " but have (Php)" + this.budget);
-            return;
-        }
-        this.budget -= this.monthlyRent;
-        this.paymentStatus = "Paid";
-         System.out.println("Payment of (Php)" + String.format("%.2f", monthlyRent) + " recorded for " + getfullName());
-        System.out.println("Remaining budget: (Php)" + String.format("%.2f", this.budget));
-}
 
     public void browseListings() {
         System.out.println(getfullName() + " is browsing available dorm listings...");
@@ -186,7 +171,6 @@ public class Student extends Person {
                     "\nLease: " + leaseStartDate + " to " + leaseEndDate +
                     "\nPayment Status: " + paymentStatus;
         }
-        
         return info;
     }
 }

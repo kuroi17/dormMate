@@ -19,8 +19,6 @@ public class Room {
         this.tenants = new ArrayList<>();
     }
 
-
-
     public String getRoomNumber() {
          return roomNumber; 
     }
@@ -61,13 +59,12 @@ public class Room {
     // Methods
     public boolean book(Student student) { 
         if (occupiedCount < capacity) {
-            tenants.add(student); // add method to add student to tenants list
+            tenants.add(student); // add method to add student sa tenants list
             occupiedCount++;
 
             if (occupiedCount == capacity) {
                 isAvailable = false; 
             }
-
             return true;
         }
         return false;

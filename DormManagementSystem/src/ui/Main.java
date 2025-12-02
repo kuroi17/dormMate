@@ -16,7 +16,7 @@ public class Main {
         // Sample students
         Student student1 = new Student
         ("Juan Dela Cruz", 
-        "juan.delacruz@email.com",
+        "juan.delacruz@gmail.com",
         "09123456789",
         "Manila, Philippines",
         "2021-12345",
@@ -25,7 +25,7 @@ public class Main {
 
         Student student2 = new Student(
         "Maria Santos", 
-        "maria.santos@email.com", 
+        "maria.santos@gmail.com", 
         "09198765432",
         "Quezon City, Philippines", 
         "2021-67890", 
@@ -38,14 +38,14 @@ public class Main {
         // Sample landlords
         Landlord landlord1 = new Landlord(
         "Pedro Santos", 
-        "pedro.santos@email.com", 
+        "pedro.santos@gmail.com", 
         "09876543210",
         "Cebu, Philippines",
         "LL-001");
 
         Landlord landlord2 = new Landlord
         ("Ana Reyes", 
-        "ana.reyes@email.com", 
+        "ana.reyesgemail.com", 
         "09171234567",
         "Batangas City, Philippines",
         "LL-002");
@@ -101,7 +101,5 @@ public class Main {
                 
         listings.add(listing1);
         listings.add(listing2);
-        
-        System.out.println("Data initialized successfully!\n");
     }
 }

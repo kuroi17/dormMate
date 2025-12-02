@@ -40,7 +40,7 @@ public class Landlord extends Person {
     public void addDorm(Dorm dorm) {
         if (dorm != null && !ownedDorms.contains(dorm)) {
             ownedDorms.add(dorm);
-             System.out.println("Dorm " + dorm.getDormName() + " added to " + getfullName() + "'s portfolio");
+            //System.out.println("Dorm " + dorm.getDormName() + " added to " + getfullName() + "'s portfolio");
         }
     }
     public void postDormListing(DormListing listing) {
@@ -77,7 +77,6 @@ public class Landlord extends Person {
                "\nEmail: " + getEmail() +
                "\nContact: " + getContactNumber() +
                "\nAddress: " + getAddress() +
-               "\nTotal Dorms: " + ownedDorms.size();
-               
+               "\nTotal Dorms: " + ownedDorms.size();          
     }
 }

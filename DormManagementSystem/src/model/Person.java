@@ -28,7 +28,6 @@ import util.InputValidator;
     this.address = address;
 }
 
-
  // gettters and setters special methods
     public String getfullName() {
         return fullName;
@@ -66,10 +65,4 @@ import util.InputValidator;
  //POLYMORPHISM: Different subclasses will provide their own implementation of this method
     public abstract String displayInfo(); 
     // abstract method walang body or implementation dito sa parentg class
- }
-
-
- 
-
-    
-    
+}

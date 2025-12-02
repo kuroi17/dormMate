@@ -210,11 +210,11 @@ public class LandlordMenu {
             );
             Main.listings.add(newListing);
             
-            System.out.println("✓ Dorm added successfully!");
+            System.out.println("Dorm added successfully!");
             System.out.println("Listing ID: " + listingID);
             
         } catch (Exception e) {
-            System.out.println("✗ Failed to add dorm: " + e.getMessage());
+            System.out.println("Failed to add dorm: " + e.getMessage());
             sc.nextLine();
         }
     }
@@ -265,10 +265,10 @@ public class LandlordMenu {
             Room newRoom = new Room(roomNumber, capacity, price);
             selectedDorm.addRoom(newRoom);
             
-            System.out.println("✓ Room added successfully to " + selectedDorm.getDormName());
+            System.out.println("Room added successfully to " + selectedDorm.getDormName());
             
         } catch (Exception e) {
-            System.out.println("✗ Failed to add room: " + e.getMessage());
+            System.out.println("Failed to add room: " + e.getMessage());
             sc.nextLine();
         }
     }
@@ -316,12 +316,12 @@ public class LandlordMenu {
                 return;
             }
             
-            System.out.println("\n✓ Response sent to " + selectedInquiry.getStudent().getfullName());
+            System.out.println("\nResponse sent to " + selectedInquiry.getStudent().getfullName());
             System.out.println("Response: " + response);
             System.out.println("(In a real system, this would be sent via email/notification)");
             
         } catch (Exception e) {
-            System.out.println("✗ Failed to respond: " + e.getMessage());
+            System.out.println("Failed to respond: " + e.getMessage());
             sc.nextLine();
         }
     }
@@ -346,8 +346,7 @@ public class LandlordMenu {
                             System.out.println("Student: " + student.getfullName());
                             System.out.println("Contact: " + student.getContactNumber());
                             System.out.println("Lease: " + student.getLeaseStartDate() + " to " + student.getLeaseEndDate());
-                            System.out.println("Monthly Rent: ₱" + student.getMonthlyRent());
-                            System.out.println("Payment Status: " + student.getPaymentStatus());
+                            System.out.println("Monthly Rent: (Php)" + student.getMonthlyRent());
                         }
                     }
                 }
