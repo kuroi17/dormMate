@@ -773,19 +773,25 @@ Exiting DormMate. Goodbye!
 
 ### Authors
 
-#### ![Shin-mie Ramos](https://avatars.githubusercontent.com/u/191760553?v=4) Shin-mie Ramos
+#### ![Shin-mie Ramos](https://avatars.githubusercontent.com/u/191760553?v=4)
+
+Shin-mie Ramos
 
 - **Course:** Computer Science
 - **Email:** 24-07030@g.batstate-u.edu.ph
 - **GitHub:** [shinmieeeee](https://github.com/shinmieeeee)
 
-#### ![Coleen Dichoso](https://avatars.githubusercontent.com/u/191759724?v=4) Coleen Dichoso
+#### ![Coleen Dichoso](https://avatars.githubusercontent.com/u/191759724?v=4)
+
+Coleen Dichoso
 
 - **Course:** Computer Science
 - **Email:** 24-07852@g.batstate-u.edu.ph
 - **GitHub:** [cole-colee](https://github.com/cole-colee)
 
-#### ![Julianne Antoinette Deduque](https://avatars.githubusercontent.com/u/129857185?v=4) Julianne Antoinette Deduque
+#### ![Julianne Antoinette Deduque](https://avatars.githubusercontent.com/u/129857185?v=4)
+
+Julianne Antoinette Deduque
 
 - **Course:** Computer Science
 - **Email:** 22-07161@g.batstate-u.edu.ph
