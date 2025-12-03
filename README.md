@@ -2,7 +2,7 @@
 
 ## 📋 Project Overview
 
-**DormMate** is a Java-based console application designed to streamline the dormitory rental process for students and landlords. The system allows students to browse available dorm listings, inquire about properties, book rooms, and manage their rental payments. Landlords can manage their dorm properties, view student inquiries, and track room availability. This project demonstrates core Object-Oriented Programming (OOP) principles and provides a practical solution for managing dormitory accommodations in an educational setting.
+**DormMate** is a Java-based console application designed to streamline the dormitory rental process for students and landlords. The system features an eye-catching ASCII art welcome screen and allows students to browse available dorm listings, inquire about properties, and book rooms. Landlords can manage their dorm properties, view student inquiries, and track room availability. This project demonstrates core Object-Oriented Programming (OOP) principles and provides a practical solution for managing dormitory accommodations in an educational setting.
 
 ---
 
@@ -10,7 +10,7 @@
 
 DormMate addresses the common challenges faced by students searching for affordable accommodation near their universities and landlords trying to manage multiple properties efficiently. The system provides:
 
-- **For Students**: Browse dorm listings, filter by budget, send inquiries to landlords, and book dorm/rooms
+- **For Students**: Browse dorm listings, filter by budget, send inquiries to landlords, book dorm/rooms, and view rental information
 - **For Landlords**: Manage multiple dorm properties, view and respond to student inquiries, track room availability and bookings
 - **Data Validation**: Input validation for emails, phone numbers, dates, and budget amounts
 - **User-Friendly Interface**: Simple menu-driven console interface for easy navigation
@@ -64,23 +64,36 @@ public class Student extends Person {
     private String studentID;
     private String universitySchool;
     private double budget;
+    
+    // rental state attributes
+    private boolean isRenting;
+    private Room currentRoom;
+    private String leaseStartDate;
+    private String leaseEndDate;
+    private double monthlyRent;
+    private String paymentStatus;
+
     public Student(
         String fullName,
         String email,
         String contactNumber,
         String address,
-
         String studentID,
         String universitySchool,
         double budget
     ) {
         // use super() to call Person constructor
         super(fullName, email, contactNumber, address);
-
+        
         this.studentID = studentID;
         this.universitySchool = universitySchool;
         this.budget = budget;
 
+        // initialize rental state
+        this.isRenting = false;
+        this.currentRoom = null;
+        this.paymentStatus = "N/A";
+    }
 }
 ```
 
@@ -100,10 +113,11 @@ public class Landlord extends Person {
     ) {
         // use super() to call Person constructor
         super(fullName, email, contactNumber, address);
-
+        
         this.landlordID = landlordID;
         this.ownedDorms = new ArrayList<>();
     }
+}
 ```
 
 ### 3. **Polymorphism**
@@ -120,39 +134,40 @@ public abstract String displayInfo(); // Abstract Method
 ```java
 // Student.java
 @Override
- public String displayInfo() {
-        String info = "\n=== STUDENT INFO ===" +
-                      "\nName: " + getfullName() +
-                      "\nStudent ID: " + studentID +
-                      "\nUniversity: " + universitySchool +
-                      "\nBudget: ₱" + String.format("%.2f", budget) +
-                      "\nEmail: " + getEmail() +
-                      "\nContact: " + getContactNumber() +
-                      "\nAddress: " + getAddress();
-
-        // Show rental info if currently renting
-        if (isRenting && currentRoom != null) {
-            info += "\n\n=== RENTAL INFO ===" +
-                    "\nRoom: " + currentRoom.getRoomNumber() +
-                    "\nMonthly Rent: ₱" + String.format("%.2f", monthlyRent) +
-                    "\nLease: " + leaseStartDate + " to " + leaseEndDate +
-                    "\nPayment Status: " + paymentStatus;
-        }
-        return info;
+public String displayInfo() {
+    String info = "\n=== STUDENT INFO ===" +
+                  "\nName: " + getfullName() +
+                  "\nStudent ID: " + studentID +
+                  "\nUniversity: " + universitySchool +
+                  "\nBudget: (Php)" + String.format("%.2f", budget) +
+                  "\nEmail: " + getEmail() +
+                  "\nContact: " + getContactNumber() +
+                  "\nAddress: " + getAddress();
+    
+    // Show rental info if currently renting
+    if (isRenting && currentRoom != null) {
+        info += "\n\n=== RENTAL INFO ===" +
+                "\nRoom: " + currentRoom.getRoomNumber() +
+                "\nMonthly Rent: (Php)" + String.format("%.2f", monthlyRent) +
+                "\nLease: " + leaseStartDate + " to " + leaseEndDate +
+                "\nPayment Status: " + paymentStatus;
     }
+    return info;
+}
 ```
 
 ```java
 // Landlord.java
 @Override
-    public String displayInfo() {
-        return "\nName: " + getfullName() +
-               "\nLandlord ID: " + landlordID +
-               "\nOwned Dorms: " + ownedDorms.size() +
-               "\nEmail: " + getEmail() +
-               "\nContact: " + getContactNumber() +
-               "\nAddress: " + getAddress() +
-               "\n Total Dorms: " + ownedDorms.size();
+public String displayInfo() {
+    return "\nName: " + getfullName() +
+           "\nLandlord ID: " + landlordID +
+           "\nOwned Dorms: " + ownedDorms.size() +
+           "\nEmail: " + getEmail() +
+           "\nContact: " + getContactNumber() +
+           "\nAddress: " + getAddress() +
+           "\nTotal Dorms: " + ownedDorms.size();
+}
 ```
 
 ### 4. **Abstraction**
@@ -208,49 +223,137 @@ DormManagementSystem/
 ### Class Relationships
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                         Person (Abstract)                    │
-│  - fullName: String                                          │
-│  - email: String                                             │
-│  - contactNumber: String                                     │
-│  - address: String                                           │
-│  + abstract displayInfo(): String                            │
-└──────────────────┬──────────────────────────────────────────┘
-                   │
-          ┌────────┴────────┐
-          │                 │
-┌─────────▼────────┐ ┌─────▼──────────┐
-│     Student      │ │    Landlord    │
-├──────────────────┤ ├────────────────┤
-│ - studentID      │ │ - landlordID   │
-│ - university     │ │ - ownedDorms   │
-│ - budget         │ │                │
-│ - currentRoom    │ │ + addDorm()    │
-│ + bookRoom()     │ │ + viewInquiries│
-│ + payRent()      │ │                │
-└──────────────────┘ └────────────────┘
-         │                    │
-         │                    │
-         ▼                    ▼
-┌─────────────────┐  ┌──────────────┐
-│     Inquiry     │  │     Dorm     │
-├─────────────────┤  ├──────────────┤
-│ - inquiryID     │  │ - dormID     │
-│ - student       │  │ - dormName   │
-│ - listing       │  │ - address    │
-│ - message       │  │ - rooms[]    │
-│ - dateSent      │  │              │
-└─────────────────┘  └──────┬───────┘
-                            │
-                            ▼
-                     ┌─────────────┐
-                     │    Room     │
-                     ├─────────────┤
-                     │ - roomNumber│
-                     │ - roomType  │
-                     │ - price     │
-                     │ - available │
-                     └─────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│                      Person (Abstract)                           │
+├──────────────────────────────────────────────────────────────────┤
+│ - fullName: String                                               │
+│ - email: String                                                  │
+│ - contactNumber: String                                          │
+│ - address: String                                                │
+├──────────────────────────────────────────────────────────────────┤
+│ + getfullName(): String                                          │
+│ + setfullName(String): void                                      │
+│ + getEmail(): String                                             │
+│ + setEmail(String): void                                         │
+│ + getContactNumber(): String                                     │
+│ + setContactNumber(String): void                                 │
+│ + getAddress(): String                                           │
+│ + setAddress(String): void                                       │
+│ + abstract displayInfo(): String                                 │
+└─────────────────────────┬────────────────────────────────────────┘
+                          │
+              ┌───────────┴───────────┐
+              │                       │
+┌─────────────▼────────────┐ ┌────────▼─────────────────┐
+│        Student           │ │       Landlord           │
+├──────────────────────────┤ ├──────────────────────────┤
+│ - studentID: String      │ │ - landlordID: String     │
+│ - universitySchool: String│ │ - ownedDorms: List<Dorm>│
+│ - budget: double         │ │                          │
+│ - isRenting: boolean     │ │                          │
+│ - currentRoom: Room      │ │                          │
+│ - leaseStartDate: String │ │                          │
+│ - leaseEndDate: String   │ │                          │
+│ - monthlyRent: double    │ │                          │
+│ - paymentStatus: String  │ │                          │
+├──────────────────────────┤ ├──────────────────────────┤
+│ + getStudentID(): String │ │ + getLandlordID(): String│
+│ + getBudget(): double    │ │ + getOwnedDorms(): List  │
+│ + isRenting(): boolean   │ │ + addDorm(Dorm): void    │
+│ + getCurrentRoom(): Room │ │ + viewInquiries(List): void│
+│ + bookRoom(): void       │ │ + postDormListing(): void│
+│ + vacateRoom(): void     │ │ + updateListing(): void  │
+│ + browseListings(): void │ │ + deleteListing(): void  │
+│ + inquireRoom(): void    │ │ + displayInfo(): String  │
+│ + displayInfo(): String  │ │                          │
+└──────────────────────────┘ └──────────────────────────┘
+              │                       │
+              │                       │
+              │    ┌──────────────────┘
+              │    │
+              │    │         ┌─────────────────────────────┐
+              │    └────────►│      DormListing            │
+              │              ├─────────────────────────────┤
+              │              │ - listingID: String         │
+              │              │ - dorm: Dorm                │
+              │              │ - landlord: Landlord        │
+              │              │ - datePosted: String        │
+              │              │ - status: String            │
+              │              │ - availableRooms: int       │
+              │              │ - photos: List<String>      │
+              │              │ - priceRange: double        │
+              │              ├─────────────────────────────┤
+              │              │ + getListingID(): String    │
+              │              │ + getDorm(): Dorm           │
+              │              │ + getLandlord(): Landlord   │
+              │              │ + getAvailableRooms(): int  │
+              │              │ + getPriceRange(): double   │
+              │              │ + addPhoto(String): void    │
+              │              └─────────────┬───────────────┘
+              │                            │
+              │                            │
+┌─────────────▼──────────────┐             │
+│         Inquiry            │             │
+├────────────────────────────┤             │
+│ - inquiryID: String        │             │
+│ - student: Student         │             │
+│ - listing: DormListing     │◄────────────┘
+│ - message: String          │
+│ - dateInquired: String     │
+│ - status: String           │
+│ - response: String         │
+├────────────────────────────┤
+│ + getInquiryID(): String   │
+│ + getStudent(): Student    │
+│ + getListing(): DormListing│
+│ + getMessage(): String     │
+│ + getStatus(): String      │
+│ + respond(String): void    │
+│ + displayInfo(): String    │
+└────────────────────────────┘
+
+┌──────────────────────────────────────────────────────┐
+│                    Dorm                              │
+├──────────────────────────────────────────────────────┤
+│ - dormName: String                                   │
+│ - rooms: List<Room>                                  │
+│ - googleMapLink: String                              │
+│ - address: String                                    │
+│ - shortDescription: String                           │
+├──────────────────────────────────────────────────────┤
+│ + getDormName(): String                              │
+│ + getRooms(): List<Room>                             │
+│ + getGoogleMapLink(): String                         │
+│ + getAddress(): String                               │
+│ + getShortDescription(): String                      │
+│ + addRoom(Room): void                                │
+│ + toString(): String                                 │
+└────────────────────────┬─────────────────────────────┘
+                         │
+                         │ contains
+                         │
+                         ▼
+          ┌──────────────────────────────┐
+          │          Room                │
+          ├──────────────────────────────┤
+          │ - roomNumber: String         │
+          │ - capacity: int              │
+          │ - occupiedCount: int         │
+          │ - pricePerMonth: double      │
+          │ - isAvailable: boolean       │
+          │ - tenants: List<Student>     │
+          ├──────────────────────────────┤
+          │ + getRoomNumber(): String    │
+          │ + getCapacity(): int         │
+          │ + getOccupiedCount(): int    │
+          │ + getPricePerMonth(): double │
+          │ + isAvailable(): boolean     │
+          │ + getTenants(): List<Student>│
+          │ + book(Student): boolean     │
+          │ + vacate(): void             │
+          │ + getOccupancyStatus(): String│
+          │ + toString(): String         │
+          └──────────────────────────────┘
 ```
 
 ### Main Classes and Their Roles
@@ -316,6 +419,26 @@ cd /workspaces/dormManagementSystem/DormManagementSystem && javac -d bin src/**/
 ### Program Start
 
 ```
+
+ ______         ,-----.    .-------.    ,---.    ,---.,---.    ,---.   ____   ,---------.    .-''-.             
+|    _ `''.   .'  .-,  '.  |  _ _   \   |    \  /    ||    \  /    | .'  __ `.\          \ .'_ _   \      
+| _ | ) _  \ / ,-.|  \ _ \ | ( ' )  |   |  ,  \/  ,  ||  ,  \/  ,  |/   '  \  \`--.  ,---'/ ( ` )   '    
+|( ''_'  ) |;  \  '_ /  | :|(_ o _) /   |  |\_   /|  ||  |\_   /|  ||___|  /  |   |   \  . (_ o _)  |       
+| . (_) `. ||  _`,/ \ _/  || (_,_).' __ |  _( )_/ |  ||  _( )_/ |  |   _.-`   |   :_ _:  |  (_,_)___|          
+|(_    ._) ': (  '\_/ \   ;|  |\ \  |  || (_ o _) |  || (_ o _) |  |.'   _    |   (_I_)  '  \   .---.      
+|  (_.\.' /  \ `"/  \  ) / |  | \ `'   /|  (_,_)  |  ||  (_,_)  |  ||  _( )_  |  (_(=)_)  \  `-'    /     
+|       .'    '. \_/``."'  |  |  \    / |  |      |  ||  |      |  |\ (_ o _) /   (_I_)    \       /       
+'-----'`        '-----'    ''-'   `'-'  '--'      '--''--'      '--' '.(_,_).'    '---'     `'-..-'             
+
+     ███████       
+    █     █ █████████    
+   █       █ ███████████   
+  ██████████████████████  
+ █                      █
+ █                      █
+ █          ███         █
+  ██████████████████████ 
+
 === WELCOME TO DormMate! ===
 
 Are you a:
@@ -367,7 +490,7 @@ Welcome, Juan Dela Cruz!
 1. Browse listings
 2. Inquire about a dorm
 3. Book a room
-4. Display my info
+4. Display info
 5. Logout
 Choice:
 ```
@@ -536,11 +659,13 @@ Choice: 1
 
 Dorm: Sunshine Dorm
 Address: 123 Main St, Quezon City
+Google Map: [Google Maps Link]
 Total Rooms: 3
 Available Rooms: 2
 
 Dorm: Greenview Apartments
 Address: 789 College Road, Manila
+Google Map: [Google Maps Link]
 Total Rooms: 6
 Available Rooms: 5
 ```
@@ -638,7 +763,6 @@ Student: Juan Dela Cruz
 Contact: 09123456789
 Lease: 2025-01-15 to 2025-06-15
 Monthly Rent: (Php)5000.0
-Payment Status: Paid
 
 --- Booking Details ---
 Dorm: Greenview Apartments
@@ -647,7 +771,6 @@ Student: Maria Clara Santos
 Contact: 09171234567
 Lease: 2025-02-01 to 2025-07-01
 Monthly Rent: (Php)6000.0
-Payment Status: Pending
 ```
 
 ### Feature 7: Display Info
