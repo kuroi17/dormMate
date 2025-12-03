@@ -8,6 +8,7 @@ public class Room {
     private int occupiedCount;
     private double pricePerMonth;
     private boolean isAvailable;
+
     private List<Student> tenants;
 
     public Room(String roomNumber, int capacity, double pricePerMonth) {
@@ -54,6 +55,10 @@ public class Room {
     
     public List<Student> getTenants() { 
         return tenants; 
+    }
+
+    public boolean getIsAvailable() {
+        return isAvailable;
     }
 
     // Methods
