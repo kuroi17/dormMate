@@ -294,7 +294,7 @@ public class LandlordMenu {
                 Inquiry inq = landlordInquiries.get(i);
                 System.out.println("\n" + (i + 1) + ". From: " + inq.getStudent().getfullName());
                 System.out.println("   Message: " + inq.getMessage());
-                System.out.println("   Date: " + inq.getDateSent());
+                System.out.println("   Date: " + inq.getDateInquired());
             }
             
             System.out.print("\nSelect inquiry number to respond: ");
