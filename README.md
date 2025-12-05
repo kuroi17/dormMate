@@ -881,7 +881,7 @@ Exiting DormMate. Goodbye!
 
 Shin-mie Ramos
 
-- **Course:** Computer Science
+- **Program:** Computer Science
 - **Email:** 24-07030@g.batstate-u.edu.ph
 - **GitHub:** [shinmieeeee](https://github.com/shinmieeeee)
 
@@ -889,7 +889,7 @@ Shin-mie Ramos
 
 Coleen Dichoso
 
-- **Course:** Computer Science
+- **Program:** Computer Science
 - **Email:** 24-07852@g.batstate-u.edu.ph
 - **GitHub:** [cole-colee](https://github.com/cole-colee)
 
@@ -897,13 +897,13 @@ Coleen Dichoso
 
 Julianne Antoinette Deduque
 
-- **Course:** Computer Science
+- **Program:** Computer Science
 - **Email:** 22-07161@g.batstate-u.edu.ph
 - **GitHub:** [jasd927](https://github.com/jasd927)
 
 #### Jyvhan Earl Ponce
 
-- **Course:** Computer Science
+- **Program:** Computer Science
 - **Email:** 24-04667@g.batstate-u.edu.ph
 - **GitHub:** [Kuroi17](https://github.com/kuroi17)
 
@@ -960,6 +960,6 @@ Julianne Antoinette Deduque
 
 - Youtube - Java Programming Tutorials
 - Generative AIs - Brainstorm and Debugging
-- GitHub - Open Source Java Repositoyies
+- GitHub - Open Source Java Repositories
 
 ---
